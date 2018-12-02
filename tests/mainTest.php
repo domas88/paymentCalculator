@@ -8,8 +8,8 @@ class paymentTest extends PHPUnit_Framework_TestCase
 	
 	public function testAdd()
 	{
-		$test = new App\Service\test;
-		$this->assertEquals(4, $test->add(2, 2));
+		$test = new App\Service\paymentService('./input.json');
+		$this->assertEquals(8, $test->counter());
 	}
 }
 

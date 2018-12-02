@@ -34,7 +34,7 @@ class paymentService
 		return $smsList;
 	}
 
-	function counter()
+	public function counter()
 	{
 		$smsToSend = array();
 		$numbersOverPrice = array();
@@ -63,6 +63,7 @@ class paymentService
 				break;
 			}
 		}
+		return $number;
 		print_r(json_encode($smsToSend));
 	}
 }
