@@ -22,7 +22,7 @@ class paymentService
 		return $jsonDecoded;
 	}
 
-	function incomeSmsList() 
+	function smsList() 
 	{
 		$smsList = array();
 		$json = $this->jsonFiles();
@@ -30,34 +30,40 @@ class paymentService
 		for ($i=0; $i < count($json['sms_list']); $i++) { 
 			$smsList[] = $json['sms_list'][$i];
 		}
+		$smsList += array('required_income' => $json['required_income']);
 		return $smsList;
 	}
 
 	function counter()
 	{
-		$price = 12.1;
 		$smsToSend = array();
-		$finalArray = array();
-		$smsArray = $this->incomeSmsList();
+		$numbersOverPrice = array();
+		$smsList = $this->smsList();
+		$price = $smsList['required_income'];
 		$number = 0;
-		$key = 3;
+		$maxSms = 3;
 
-		while ($number < $price && $key >= 0) {
-			$number += $smsArray[$key]['price'];
-			$smsToSend[] += $smsArray[$key]['price'];
-			
-			if ($number > $price && $key != 0) {
-				$finalArray[] = $number;
-				$number -= $smsArray[$key]['price'];
+		for ($i=3; $i >= 0;) { 
+			$number += $smsList[$i]['price'];
+			$smsToSend[] += $smsList[$i]['price'];
+			$maxSms -= 1;
+
+			if ($number > $price && $i != 0) {
+				$numbersOverPrice[] = $number;
+				$number -= $smsList[$i]['price'];
 				array_pop($smsToSend);
-				$key -= 1;
+				$i--;
 			} else if ($number == $price) {
 				break;
-			} else if ($number != $price && $key == 0 && $number < $price) {
-				$smsToSend[] += min($finalArray[]);
+			} else if ($number != $price && $i == 0 && $number < $price) {
+				$smsToSend[] += min($numbersOverPrice[]);
+				break;
+			} else if ($maxSms == 0) {
+				echo "error";
+				break;
 			}
 		}
-		print_r($smsToSend);
+		print_r(json_encode($smsToSend));
 	}
 }
 
