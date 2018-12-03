@@ -1,15 +1,27 @@
 <?php 
 
+use App\Service\paymentService;
+
 /**
  * 
  */
 class paymentTest extends PHPUnit_Framework_TestCase
 {
-	
-	public function testAdd()
+
+	public function setTest()
 	{
-		$test = new App\Service\paymentService('./input.json');
-		$this->assertEquals(8, $test->counter());
+		return $smsService = new paymentService('./input.json');
+
+	}
+
+	public function setSmsArray()
+	{
+		return $actTest = $this->setTest()->jsonDecode();
+	}
+	
+	public function setCounter()
+	{
+		return $actTest = $this->setTest()->counter($this->setSmsArray());
 	}
 }
 
