@@ -7,14 +7,14 @@ namespace App\Service;
  */
 class paymentService
 {
-	public $jsonStr;
+	private $jsonStr;
 	
 	function __construct($arg)
 	{
 		$this->jsonStr = $arg;
 	}
 
-	function jsonDecode() 
+	public function jsonDecode() 
 	{
 		$json = file_get_contents($this->jsonStr);
 		$jsonDecoded = json_decode($json, true);
@@ -32,14 +32,14 @@ class paymentService
 		$errorMsg = '';
 		$number = 0;
 
-		for ($i = 3; $i >= 0;) { 
-			$number += $smsInput['sms_list'][$i]['price'];
+		for ($i = count($smsInput['sms_list']) - 1; $i >= 0;) { 
+			$number += $smsInput['sms_list'][$i]['income'];
 			$smsToSend[] += $smsInput['sms_list'][$i]['price'];
 			$maxSms -= 1;
 
 			if ($number > $price && $i != 0) {
 				$numbersOverPrice[] = $number;
-				$number -= $smsInput['sms_list'][$i]['price'];
+				$number -= $smsInput['sms_list'][$i]['income'];
 				array_pop($smsToSend);
 				$i--;
 			} else if ($number == $price) {

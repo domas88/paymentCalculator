@@ -16,10 +16,4 @@ $json->counter($json->jsonDecode());
 
 
 
-
-
-
-
-
-
  ?>
