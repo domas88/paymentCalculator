@@ -37,6 +37,7 @@ class PaymentService
 				$maxMessages += 1;
 			}
 		}
+		
 		return $result;
 	}
 }

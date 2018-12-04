@@ -17,7 +17,9 @@ class paymentTest extends PHPUnit_Framework_TestCase
 	public function test()
 	{
 		$service = new PaymentService('./input.json');
+		$input = $service->jsonDecode();
 
-		$this->assertEquals(7.99, $service->count($service->jsonDecode(), 0, []));
+		$this->assertEquals($service->count(6, $input['sms_list'], 10), 
+			[0 => 3, 1 => 3, 2 => 0.5]);
 	}
 }
