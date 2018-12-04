@@ -1,19 +1,8 @@
 <?php 
 
 require "vendor/autoload.php";
-use App\Service\paymentService;
+use App\Service\PaymentService;
 
-$json = new paymentService($argv[1]);
-$json->counter($json->jsonDecode());
+$json = new PaymentService($argv[1]);
 
-
-
-
-
-
-
-
-
-
-
- ?>
+print_r($json->count($json->jsonDecode()));
