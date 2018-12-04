@@ -37,7 +37,8 @@ class PaymentService
 				$maxMessages += 1;
 			}
 		}
-		
-		return $result;
+		if ($number > $requiredIncome) {
+			return $result;
+		}
 	}
 }
