@@ -19,26 +19,24 @@ class PaymentService
 		return $jsonDecoded;
 	}
 
-	public function count($json)
+	public function count($requiredIncome, $smsList, $maxMessages)
 	{
 		$number = 0;
 		$result = array();
-		$requiredIncome = $json['required_income'];
-		$endPoint = count($json['sms_list']);
-		$maxMessages = $json['max_messages'];
+		$endPoint = count($smsList);
 
-		foreach (array_reverse($json['sms_list']) as $key => $value) {
+		foreach (array_reverse($smsList) as $key => $value) {
 			while ($number < $requiredIncome && $maxMessages != 0) {
-				$number += $value['price'];
+				$number += $value['income'];
 				$result[] = $value['price'];
 				$maxMessages -= 1;
 			} if ($number > $requiredIncome && $endPoint != 1) {
-				$number -= $value['price'];
+				$number -= $value['income'];
 				array_pop($result);
 				$endPoint -= 1;
 				$maxMessages += 1;
 			}
 		}
-		return json_encode($result);
+		return $result;
 	}
 }

@@ -10,17 +10,14 @@ class paymentTest extends PHPUnit_Framework_TestCase
 
 	public function setTest()
 	{
-		return $smsService = new PaymentService('./input.json');
+		return $service = new PaymentService('./input.json');
 
 	}
 
-	public function jsonDecode()
+	public function test()
 	{
-		return $actTest = $this->setTest()->jsonDecode();
-	}
-	
-	public function setCount()
-	{
-		return $actTest = $this->setTest()->count($this->setSmsArray());
+		$service = new PaymentService('./input.json');
+
+		$this->assertEquals(7.99, $service->count($service->jsonDecode(), 0, []));
 	}
 }
