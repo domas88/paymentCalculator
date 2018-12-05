@@ -41,4 +41,13 @@ class PaymentService
 			return $result;
 		}
 	}
+
+	public function printResult($result)
+	{
+		if (is_array($result)) {
+			print_r(json_encode($result));
+		} else {
+			print_r('Max messages exceeded');
+		}
+	}
 }
